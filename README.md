@@ -32,5 +32,6 @@ Contacts page: The home screen displays a list of contacts with options to add, 
   <img src = "https://github.com/user-attachments/assets/7f8a01ea-f75d-458f-a717-a83aad4938f4" height = 25%  width=25%>
 </p>
 
+![Screenshot 2024-10-25 213627](https://github.com/user-attachments/assets/87b50664-9c77-4e91-b36a-186b1e19bb31)
 
 
