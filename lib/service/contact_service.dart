@@ -32,36 +32,47 @@ class ContactHelper {
     return _db;
   }
 
-  Future<List<Map<String, Object?>>> readData()
-  async {
+  Future<List<Map<String, Object?>>> readData() async {
     Database? db = await database;
-    String sql ='''
+    String sql = '''
     SELECT * FROM Contact
     ''';
     return await db!.rawQuery(sql);
   }
-  Future<void> insertContactData(String name, String phone, String email) async {
+
+  Future<void> insertContactData(
+      String name, String phone, String email) async {
     Database? db = await database;
     String sql = '''INSERT INTO Contact(name, phone, email) VALUES(?, ?, ?);''';
-    List<dynamic> args  = [name,phone,email];
-     await db!.rawInsert(sql,args);
+    List<dynamic> args = [name, phone, email];
+    await db!.rawInsert(sql, args);
   }
 
   Future<void> updateData(
-      int id,String name, String phone, String email) async {
+      int id, String name, String phone, String email) async {
     Database? db = await database;
     String sql =
-    '''UPDATE Contact SET name = ?, phone = ?, email = ? WHERE id = ?;''';
-    List<dynamic> args = [name, phone, email,id]; // Corrected the order of arguments
+        '''UPDATE Contact SET name = ?, phone = ?, email = ? WHERE id = ?;''';
+    List<dynamic> args = [
+      name,
+      phone,
+      email,
+      id
+    ]; // Corrected the order of arguments
     await db!.rawUpdate(sql, args);
   }
 
-  Future<void> removeDetail(int id)
-  async {
+  Future<void> removeDetail(int id) async {
     Database? db = await database;
     String sql = '''DELETE FROM Contact WHERE id = ?''';
-    List args = [id];
-    await db!.rawDelete(sql);
+    List<dynamic> args = [id];
+    await db!.rawDelete(sql, args);
+  }
+
+  Future<List<Map<String, Object?>>> readLiveData(String name) async {
+    Database? db = await database;
+    String sql = "SELECT * FROM Contact WHERE name LIKE '%$name%'";
+
+    return await db!.rawQuery(sql);
   }
 }
-

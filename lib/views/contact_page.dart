@@ -14,10 +14,14 @@ class ContactPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text('Contact Page'),
-        actions: [IconButton(onPressed: () async {
-         await  AuthService.authService.logOut();
-         Get.toNamed('/sign-In');
-        }, icon: Icon(Icons.logout))],
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await AuthService.authService.logOut();
+                Get.toNamed('/sign-In');
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Obx(
         () => Column(
@@ -26,12 +30,12 @@ class ContactPage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: TextField(
                 onChanged: (value) {
-                  // c.readLive(value);
+                 contactController.readLive(value);
                 },
                 decoration: InputDecoration(
                   hintText: 'search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.search),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  prefixIcon: const Icon(Icons.search),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: BorderSide(color: Colors.blue, width: 1)),
@@ -48,13 +52,79 @@ class ContactPage extends StatelessWidget {
                   padding: const EdgeInsets.all(9),
                   child: Card(
                     child: ListTile(
-                        title: Text(
-                           'Shalu'),
-                        subtitle: Text(
-                            '6534738545'),
+                        title: Text(contactController.data[index]['name']),
+                        subtitle: Text(contactController.data[index]['phone']),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text(
+                                        'Update Contact',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          TextField(
+                                            controller: contactController.txtName,
+                                            decoration: const InputDecoration(
+                                                labelText: 'Name',
+                                                enabledBorder: OutlineInputBorder(),
+                                                focusedBorder: OutlineInputBorder()),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextField(
+                                            controller: contactController.txtPhone,
+                                            decoration: const InputDecoration(
+                                                labelText: 'phone number',
+                                                enabledBorder: OutlineInputBorder(),
+                                                focusedBorder: OutlineInputBorder()),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextField(
+                                            controller: contactController.txtEmail,
+                                            decoration: const InputDecoration(
+                                                labelText: 'email',
+                                                enabledBorder: OutlineInputBorder(),
+                                                focusedBorder: OutlineInputBorder()),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(color: Colors.black),
+                                            )),
+                                        TextButton(
+                                            onPressed: () {
+                                              contactController.updateDataInContact(contactController.data[index]['id'],
+                                                  contactController.txtName.text,
+                                                  contactController.txtPhone.text,
+                                                  contactController.txtEmail.text);
+                                              Get.back();
+
+                                            },
+                                            child: const Text(
+                                              'Save',
+                                              style: TextStyle(color: Colors.black),
+                                            ))
+                                      ],
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.edit)),
                             IconButton(
                                 onPressed: () {
                                   contactController.removeData(
@@ -94,6 +164,9 @@ class ContactPage extends StatelessWidget {
                         enabledBorder: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder()),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextField(
                     controller: contactController.txtPhone,
                     decoration: const InputDecoration(
@@ -129,6 +202,9 @@ class ContactPage extends StatelessWidget {
                           contactController.txtPhone.text,
                           contactController.txtEmail.text);
                       Get.back();
+                      contactController.txtName.clear();
+                      contactController.txtEmail.clear();
+                      contactController.txtPhone.clear();
                     },
                     child: const Text(
                       'Save',
