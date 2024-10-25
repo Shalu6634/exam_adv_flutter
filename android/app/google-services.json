@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "963436293913",
+    "project_id": "exam-56214",
+    "storage_bucket": "exam-56214.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963436293913:android:4dd81ba304a12459da9f88",
+        "android_client_info": {
+          "package_name": "com.example.exam_adv_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB90q05YRWGnPKh4wDxxfW_izxg_MmBfTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
