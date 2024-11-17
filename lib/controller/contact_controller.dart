@@ -1,53 +1,51 @@
-import 'package:exam_adv_flutter/service/contact_service.dart';
+import 'package:exam_adv_flutter/helper/contact_helper.dart';
+import 'package:exam_adv_flutter/modal/contact_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class ContactController extends GetxController {
+class DbController extends GetxController
+{
+
+  TextEditingController txtName  = TextEditingController();
+  TextEditingController txtPhone = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
-  TextEditingController txtName = TextEditingController();
-  TextEditingController txtConfirmPassword = TextEditingController();
-  TextEditingController txtPhone = TextEditingController();
+  TextEditingController txtComPassword = TextEditingController();
+
+
   RxList data = [].obs;
-
-  List name = [];
-
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     initDb();
+    getData();
   }
-
   Future<void> initDb() async {
-    await ContactHelper.contactHelper.database;
+    await DbHelper.dbHelper.database;
+    await getData();
   }
-
-  Future<void> insertData(String name, String phone, String email) async {
-    await ContactHelper.contactHelper.insertContactData(name, phone, email);
-    await getContactData();
+  Future<void> insertData(String name,String phone,String email)
+  async {
+    await DbHelper.dbHelper.insertContact(name, phone, email);
+    await getData();
   }
-
-  Future<RxList> getContactData() async {
-    data.value = await ContactHelper.contactHelper.readData();
-
+  Future<RxList> getData()
+  async {
+    data.value = await DbHelper.dbHelper.readContactData();
     return data;
   }
-
-   Future<void> updateDataInContact(int id,String name, String phone, String email)
-   async {
-     await ContactHelper.contactHelper.updateData(id, name, phone, email);
-     await getContactData();
-   }
-
-  Future<void> removeData(int id) async {
-    await ContactHelper.contactHelper.removeDetail(id);
-    await getContactData();
-  }
-
-  Future<void> readLive(String value)
+  Future<void> deleteDetail(int id)
   async {
-    data.value = await ContactHelper.contactHelper.readLiveData(value);
-
+    await DbHelper.dbHelper.removeDetail(id);
+    print(id);
+    await getData();
   }
+  Future<void> updateDetail(String name,String phone,String email,int id)
+  async {
+    await DbHelper.dbHelper.updateContact(name, phone, email, id);
+    await getData();
+  }
+
+
 }

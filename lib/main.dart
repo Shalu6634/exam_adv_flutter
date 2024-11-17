@@ -1,8 +1,6 @@
-import 'package:exam_adv_flutter/views/auth/auth_manager.dart';
-import 'package:exam_adv_flutter/views/auth/sign-in.dart';
-import 'package:exam_adv_flutter/views/auth/sign-up.dart';
-import 'package:exam_adv_flutter/views/contact_page.dart';
-
+import 'package:exam_adv_flutter/view/account/sign-in.dart';
+import 'package:exam_adv_flutter/view/account/sign-up.dart';
+import 'package:exam_adv_flutter/view/screen/conatctPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,13 +22,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-   getPages: [
-     GetPage(name: '/', page: () => AuthManager(),),
-     GetPage(name: '/sign-In', page: () => SignInScreen(),),
-     GetPage(name: '/sign-Up', page: () => SignUpScreen(),),
-     GetPage(name: '/home', page: () => ContactPage(),),
-
-   ],
+      getPages: [
+        GetPage(
+          name: '/home',
+          page: () => const ContactPage(),
+        ),
+        GetPage(name: '/', page: () => const SignInPage(),),
+        GetPage(name: '/sign-Up', page: () => const SignUpPage(),),
+      ],
     );
   }
 }
