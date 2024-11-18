@@ -25,9 +25,9 @@ class DbController extends GetxController
     await DbHelper.dbHelper.database;
     await getData();
   }
-  Future<void> insertData(String name,String phone,String email)
+  Future<void> insertData(String name,String phone,String email,String docId)
   async {
-    await DbHelper.dbHelper.insertContact(name, phone, email);
+    await DbHelper.dbHelper.insertContact(name, phone, email,docId);
     await getData();
   }
   Future<RxList> getData()

@@ -17,7 +17,7 @@ class DbHelper {
       dbPath,
       version: 1,
       onCreate: (db, version) async {
-        String sql = '''CREATE TABLE Contact(id INTEGER PRIMARY KEY,name TEXT,phone TEXT,email TEXT)''';
+        String sql = '''CREATE TABLE Contact(id INTEGER PRIMARY KEY,name TEXT,phone TEXT,email TEXT,docId TEXT)''';
         return await db.execute(sql);
       },
     );
@@ -31,11 +31,11 @@ class DbHelper {
     return await db.rawQuery(sql);
 
   }
-  Future<void> insertContact(String name,String phone,String email)
+  Future<void> insertContact(String name,String phone,String email,String docId)
   async {
     Database? db = await  database;
-    String sql = '''INSERT INTO Contact(name,phone,email) VALUES(?,?,?);''';
-    List args = [name,phone,email];
+    String sql = '''INSERT INTO Contact(name,phone,email,docId) VALUES(?,?,?,?);''';
+    List args = [name,phone,email,docId];
    await  db.rawInsert(sql,args);
   }
 

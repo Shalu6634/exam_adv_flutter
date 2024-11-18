@@ -27,8 +27,14 @@ class MyApp extends StatelessWidget {
           name: '/home',
           page: () => const ContactPage(),
         ),
-        GetPage(name: '/', page: () => const SignInPage(),),
-        GetPage(name: '/sign-Up', page: () => const SignUpPage(),),
+        GetPage(
+          name: '/',
+          page: () => const SignInPage(),
+        ),
+        GetPage(
+          name: '/sign-Up',
+          page: () => const SignUpPage(),
+        ),
       ],
     );
   }

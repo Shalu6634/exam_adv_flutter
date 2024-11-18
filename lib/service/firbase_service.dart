@@ -1,23 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+class CloudFireService {
+  CloudFireService._();
 
-import 'auth_service.dart';
+  static CloudFireService cloudFireService = CloudFireService._();
 
-class FireService {
-  FireService._();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  static FireService fireService = FireService._();
-
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> readDataFromStore() {
-    return _firestore
-        .collection("users")
-        .doc(AuthService.authService.getCurrentUser()!.email)
-        .collection("expense")
-        .snapshots();
+  Future<String> addContactDetailInFireBase(
+      String name, String phone, String email) async {
+    var refId = await firestore
+        .collection(email)
+        .add({'name': name, 'phone': phone, 'email': email});
+    return refId.id;
   }
 }

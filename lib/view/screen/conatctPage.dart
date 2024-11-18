@@ -1,6 +1,7 @@
 import 'package:exam_adv_flutter/controller/contact_controller.dart';
 import 'package:exam_adv_flutter/controller/firebase_controller.dart';
 import 'package:exam_adv_flutter/service/auth_service.dart';
+import 'package:exam_adv_flutter/service/firbase_service.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,9 @@ class ContactPage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () async {
-
-                // await controller.syncCloudToLocal();
+                await CloudFireService.cloudFireService
+                    .addContactDetailInFireBase(controller.txtName.text, controller.txtPhone.text
+                    , controller.txtEmail.text);
               },
               icon: const Icon(
                 Icons.sync,
@@ -193,9 +195,10 @@ class ContactPage extends StatelessWidget {
                   TextField(
                     controller: controller.txtEmail,
                     decoration: const InputDecoration(
-                        labelText: 'email',
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder()),
+                      labelText: 'email',
+                      enabledBorder: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(),
+                    ),
                   ),
                 ],
               ),
@@ -206,9 +209,13 @@ class ContactPage extends StatelessWidget {
                     },
                     child: const Text('cancel')),
                 TextButton(
-                  onPressed: () {
-                    controller.insertData(controller.txtName.text,
-                        controller.txtPhone.text, controller.txtEmail.text);
+                  onPressed: () async {
+                    String name = controller.txtName.text;
+                    String phone = controller.txtPhone.text;
+                    String email = controller.txtEmail.text;
+                    String docId = await CloudFireService.cloudFireService
+                        .addContactDetailInFireBase(name, phone, email);
+                    controller.insertData(name, phone, email, docId);
                     Get.back();
                     controller.txtEmail.clear();
                     controller.txtPhone.clear();
